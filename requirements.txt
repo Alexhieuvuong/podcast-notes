@@ -1,0 +1,9 @@
+yt-dlp>=2025.1
+python-dotenv>=1.0
+requests>=2.31
+feedparser>=6.0
+markdown>=3.5
+
+# Fallback transcribe khi video KHÔNG có phụ đề (tùy chọn) — bỏ comment nếu cần:
+# faster-whisper>=1.0
+# (yt-dlp ở trên đã tải được audio cho Whisper)

@@ -1,0 +1,13 @@
+# Mỗi dòng 1 kênh/playlist YouTube để theo dõi. Dòng bắt đầu bằng # là chú thích.
+# Chấp nhận các dạng:
+#   - channel_id:   UCxxxxxxxxxxxxxxxxxxxxxx
+#   - playlist_id:  PLxxxxxxxx...
+#   - URL kênh / @handle:   https://www.youtube.com/@TenKenh    hoặc    @TenKenh
+#   - URL RSS đầy đủ:       https://www.youtube.com/feeds/videos.xml?channel_id=UC...
+#
+# Cách lấy channel_id: mở trang kênh → View Source → tìm "channelId".
+#
+# Thêm kênh podcast của bạn bên dưới:
+@vietcetera
+@vietnaminnovatorsdigest
+@VIETSUCCESS

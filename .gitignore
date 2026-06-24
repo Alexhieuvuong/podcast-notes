@@ -1,0 +1,13 @@
+# Secrets / local config
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Local state / generated data
+data/
+
+# macOS
+.DS_Store

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.podcastnotes.daily</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/vuongdinhhieu/podcast-notes/.venv/bin/python</string>
+    <string>/Users/vuongdinhhieu/podcast-notes/scripts/run_daily.py</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/vuongdinhhieu/podcast-notes</string>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key><integer>7</integer>
+    <key>Minute</key><integer>0</integer>
+  </dict>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/Users/vuongdinhhieu/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>NOTES_ENGINE</key>
+    <string>claude</string>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>/Users/vuongdinhhieu/podcast-notes/logs/daily.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/vuongdinhhieu/podcast-notes/logs/daily.log</string>
+
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>
