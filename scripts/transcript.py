@@ -38,6 +38,15 @@ def _base_opts():
     client = os.environ.get("YDLP_PLAYER_CLIENT") or (None if browser else "android")
     if client:
         opts["extractor_args"] = {"youtube": {"player_client": [client]}}
+    # Giả lập (impersonate) TLS/HTTP của trình duyệt thật (cần curl_cffi) — vượt qua
+    # 429 mà YouTube 2025 áp lên endpoint timedtext. Bỏ qua nếu target không khả dụng.
+    target = os.environ.get("YT_IMPERSONATE", "chrome")
+    if target:
+        try:
+            from yt_dlp.networking.impersonate import ImpersonateTarget
+            opts["impersonate"] = ImpersonateTarget.from_str(target)
+        except Exception:
+            pass
     return opts
 
 
