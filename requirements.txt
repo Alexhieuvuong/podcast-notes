@@ -4,6 +4,24 @@ requests>=2.31
 feedparser>=6.0
 markdown>=3.5
 
+# --- Vượt rào phụ đề YouTube 2025 (BẮT BUỘC để lấy transcript) ---
+# Từ ~2025, YouTube siết endpoint phụ đề: client `android` bị 429 dai dẳng, client
+# `web` không trả caption nếu thiếu PO token. Cần CẢ HAI thứ dưới đây + cookie trình
+# duyệt (YT_COOKIES_BROWSER trong .env). Chi tiết: scripts/transcript.py::_base_opts.
+#
+# 1) Giả lập (impersonate) TLS/HTTP trình duyệt thật — yt-dlp dùng để vượt 429:
+curl_cffi>=0.7
+# 2) Tự sinh PO token cho client web. PIN khớp yt-dlp: 1.1.0 hợp với yt-dlp 2025.10.x;
+#    bản 1.3.x cần yt-dlp mới hơn (lỗi "debug() got unexpected kwarg 'once'"). Nếu nâng
+#    yt-dlp thì nâng cả plugin này VÀ build lại generator (xem bước thủ công bên dưới).
+bgutil-ytdlp-pot-provider==1.1.0
+#
+# *** BƯỚC THỦ CÔNG (pip KHÔNG tự làm) *** — build generator Node cho PO token (script mode):
+#    git clone --branch 1.1.0 https://github.com/Brainicism/bgutil-ytdlp-pot-provider.git ~/bgutil-ytdlp-pot-provider
+#    cd ~/bgutil-ytdlp-pot-provider/server && npm install --legacy-peer-deps && npx tsc
+#    → tạo ~/bgutil-ytdlp-pot-provider/server/build/generate_once.js (plugin tự tìm path này).
+#    Yêu cầu: Node.js (>=18). Không cần server chạy nền.
+
 # Fallback transcribe khi video KHÔNG có phụ đề (tùy chọn) — bỏ comment nếu cần:
 # faster-whisper>=1.0
 # (yt-dlp ở trên đã tải được audio cho Whisper)
