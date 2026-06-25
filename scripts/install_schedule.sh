@@ -40,6 +40,13 @@ else
   echo "✓ bgutil generator đã có: $BG_GEN"
 fi
 
+# 3) Cookie cho launchd: xuất ra file ngay bây giờ (lúc cài đặt là phiên tương tác,
+#    có thể bấm cho phép Keychain) — job 7h sáng chạy nền sẽ đọc file này, không cần
+#    Keychain/Full Disk Access. Không fatal: thiếu cookie thì cảnh báo, vẫn đặt lịch.
+echo "Xuất cookie YouTube ra file cho job launchd..."
+bash "$ROOT/scripts/export_cookies.sh" \
+  || echo "⚠️  Chưa xuất được cookie. Chạy lại 'bash scripts/export_cookies.sh' khi đã đăng nhập YouTube, nếu không cron sẽ không lấy được phụ đề."
+
 mkdir -p "$HOME/Library/LaunchAgents" "$ROOT/logs"
 cp "$ROOT/$PLIST" "$DEST"
 

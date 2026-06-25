@@ -30,12 +30,23 @@ def _base_opts():
     đã đăng nhập YouTube → request có xác thực, tránh 429/chặn IP ẩn danh.
     """
     opts = {"skip_download": True, "quiet": True, "no_warnings": True}
+    # Cookie YouTube — ƯU TIÊN file Netscape (YT_COOKIES_FILE) vì job launchd chạy nền
+    # KHÔNG truy cập được Keychain/Full Disk Access để đọc cookie trực tiếp từ trình duyệt.
+    # Xuất file bằng scripts/export_cookies.sh (chạy tay khi đăng nhập). Đọc trực tiếp từ
+    # trình duyệt (YT_COOKIES_BROWSER) chỉ là fallback cho lần chạy tay có phiên đăng nhập.
+    cookiefile = os.environ.get("YT_COOKIES_FILE")
     browser = os.environ.get("YT_COOKIES_BROWSER")
-    if browser:
+    if cookiefile and os.path.isfile(cookiefile):
+        opts["cookiefile"] = cookiefile
+        has_cookies = True
+    elif browser:
         opts["cookiesfrombrowser"] = (browser,)
+        has_cookies = True
+    else:
+        has_cookies = False
     # Client: CÓ cookie → client mặc định (web đăng nhập, trả caption tốt nhất);
     # KHÔNG cookie → android (trả caption khi ẩn danh). Ép tay qua YDLP_PLAYER_CLIENT.
-    client = os.environ.get("YDLP_PLAYER_CLIENT") or (None if browser else "android")
+    client = os.environ.get("YDLP_PLAYER_CLIENT") or (None if has_cookies else "android")
     if client:
         opts["extractor_args"] = {"youtube": {"player_client": [client]}}
     # Giả lập (impersonate) TLS/HTTP của trình duyệt thật (cần curl_cffi) — vượt qua
